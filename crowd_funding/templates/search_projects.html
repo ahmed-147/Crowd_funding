@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <style>
+      #www {
+        padding: 35px;
+        background-color: gray;
+        border: 1px solid #ddd;
+      }
+
+      .container {
+        margin-right: auto;
+        margin-left: auto;
+      }
+      .form-control-borderless {
+        border: none;
+      }
+
+      .form-control-borderless:hover,
+      .form-control-borderless:active,
+      .form-control-borderless:focus {
+        border: none;
+        outline: none;
+        box-shadow: none;
+      }
+    </style>
+    {% endblock head%}
+
+{% block contain%}
+
+
+    
+    <div class="container ">
+
+      <div class="row my-2 px-5 ">
+
+        <div class="col-sm-12 col-md-10 col-lg-10">
+          <div class="row">
+            {% for project in projects%}
+            <div class="col-lg-4 py-2">
+              <a href="{% url 'project:show_project' project.pk %}" style="max-height:300px" class="card border-0 shadow-sm text-dark" data-aos="fade-left" data-aos-delay='100'>
+                  <img src="{{project.first_img.img.url}}" class="card-img-top" style="object-fit: cover;" width="100%" height="200px" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">{{project.title}}</h5>
+                    <p class="card-text " >{{project.details}}</p>
+                  </div>
+              </a>
+            </div>
+            {% endfor %}
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+{% endblock contain %}

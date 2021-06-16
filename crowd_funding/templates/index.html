@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+       <style>
+                .carousel-control-next,
+                .carousel-control-prev ,/*, .carousel-indicators */
+                .carousel-indicators{
+                    filter: invert(70%);
+                }
+                .carousel-indicators > li {
+                    border-radius: 50%;
+                    width: 10px;
+                    height: 10px;
+
+                }
+                .carousel-fade .carousel-inner .item {
+                    transition-property: opacity;
+                }
+                .carousel-fade .carousel-inner .item,
+                .carousel-fade .carousel-inner .active.left,
+                .carousel-fade .carousel-inner .active.right {
+                    opacity: 0;
+                }
+                .carousel-fade .carousel-inner .active,
+                .carousel-fade .carousel-inner .next.left,
+                .carousel-fade .carousel-inner .prev.right {
+                    opacity: 1;
+                }
+                .carousel-fade .carousel-inner .next,
+                .carousel-fade .carousel-inner .prev,
+                .carousel-fade .carousel-inner .active.left,
+                .carousel-fade .carousel-inner .active.right {
+                    left: 0;
+                    transform: translate3d(0, 0, 0);
+                }
+                .carousel-fade .carousel-control {
+                    z-index: 2;
+                }
+                body{
+                    background-color: lightgray;
+                }
+
+          </style>
+{% endblock head%}
+{%block contain%}
+            <div class="container-fluid " >
+              <div class="row mb-5" >
+                <div id="projectCarousel" class="carousel slide carousel-fade w-100" data-ride="carousel" >
+                    <ol class="carousel-indicators">
+                        {% for project in toprated5_projects%}
+                        {% if forloop.counter0 == 0%}
+                        <li data-target="#projectCarousel" data-slide-to="{{forloop.counter0}}" class="active"></li>
+                        {%else%}
+                        <li data-target="#projectCarousel" data-slide-to="{{forloop.counter0}}"></li>
+                        {%endif%}
+                        {%endfor%}
+                    </ol>
+                    <div class="carousel-inner ">
+                        {% for project in toprated5_projects%}
+                        {% if forloop.counter0 == 0%}
+                        <div class="carousel-item active" data-interval="500">
+                            <a href="{% url 'project:show_project' project.pk%}"><img src="{{project.first_img.img.url}}" class="d-block " style="object-fit: cover;" alt="..."width="100%" height="500"></a>
+                            <div class="carousel-caption d-none d-md-block text-left text-dark">
+                                <h4>{{project.title}}</h4>
+                                <p>{{project.details}}</p>
+                            </div>
+                        </div>
+                        {%else%}
+                        <div class="carousel-item" data-interval="500" >
+                            <a href="{% url 'project:show_project' project.pk%}"><img src="{{project.first_img.img.url}}" class="d-block " style="object-fit: cover;"  alt="..."width="100%" height="500"></a>
+                            <div class="carousel-caption d-none d-md-block text-left text-dark">
+                                <h5>{{project.title}}</h5>
+                                <p>{{project.details}}</p>
+                            </div>
+                        </div>
+                        {%endif%}
+                        {%endfor%}
+
+                    </div>
+                    <a class="carousel-control-prev " href="#projectCarousel" role="button" data-slide="prev">
+                        <!-- <span class="carousel-control-prev-icon " aria-hidden="true"></span> -->
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#projectCarousel" role="button" data-slide="next">
+                        <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+              </div>
+                <!-- Categories  div -->
+              <div class="row  px-5">
+                  <div class="col-sm-10 d-flex align-items-center">
+                    <hr style="width: 3%; border:solid 1px #17a2b8;" class="border-info m-3 "/>
+                    <span class="m-1 h6 "> Categories</span>
+                    
+                    
+                  </div>
+                  <div class="col-sm-2 text-right">
+                    <a href="{% url 'category:show_categories'%}" class="text-secondary" >View more <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                  </div>
+              </div>
+              
+              <div class="row my-5 px-5" data-aos="fade-up" >
+                  {% for category in categories%}
+                  <div class="col">
+                        <a href="/search/?search={{category.pk}}" class="card bg-white rounded-lg shadow text-center text-info" style="max-width: 18rem;">
+                            <div class="card-body  ">
+                              <div class="mb-2"><i class="fa fa-user-md fa-4x" aria-hidden="true"></i></div>
+                              <h5 class="card-title">{{category.name}}</h5>
+                            </div>
+                        </a>
+                    </div>
+                  {% endfor%}
+
+                
+              </div>
+                 <!-- Recommended Projects  div -->
+              <div class="row px-5" >
+                <div class="col-sm-10 d-flex align-items-center">
+                    <hr style="width: 3%; border:solid 0.5px #17a2b8;" class="border-info m-3 "/>
+                    <span class="m-1 h6 text-dark">Recommended Projects</span>
+                    
+                </div>
+                
+                <div class="col-sm-2 text-right">
+                    <a href="/search/?featured=1" class="text-secondary" >View more <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                </div>
+
+              </div>
+              
+              <div class="row my-5 px-5">
+                    <div class="col-sm-12 col-md-6 col-lg-6 px-2">
+                        {% for project in featured4_projects%}
+                        <a href="{% url 'project:show_project' project.pk%}" class=" card  text-dark bg-white border-0 shadow-sm mb-2" style="width: 100%;" data-aos="fade-up" >
+                            <div class="row no-gutters" >
+                                <div class="col-sm-3">
+                                    <img src="{{project.first_img.img.url}}" alt="" style="width: 100%; height:7rem;" >
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{project.title}} <small class="text-muted float-right">2021-9-6</small></h5>
+                                        <p class="card-text">{{project.details}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor%}
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 ">
+                        <a href="{% url 'project:show_project' featured_first_project.pk%}" class="card bg-dark text-white border-0 shadow mb-2" data-aos="fade-up" data-aos-delay='100'>
+                            <img src="{{featured_first_project.first_img.img.url}}" class="card-img" alt="..." style="width: 100%; height:30rem;">
+                            <div class="card-img-overlay clearfix" style="background-image: linear-gradient(#00000086, #00000000);">
+                              <h6 class="card-title  "><span class="h1">{{featured_first_project.title}}</span> <small class="float-right">2021-9-6</small></h6>
+                              <p class="card-text align-self-end">{{featured_first_project.details}}</p>
+                            </div>
+                        </a>
+                    </div>
+                   
+                
+              </div>
+                <!-- last projects div -->
+              <div class="row px-5">
+                <div class="col-sm-10 d-flex align-items-center">
+                    <hr style="width: 3%; border:solid 1px #17a2b8;" class="border-info m-3"/>
+                    <span class="m-1 h6"> last Projects </span>
+                    
+                </div>
+
+                <div class="col-sm-2 text-right">
+                    <a href="/search/?last=1" class="text-secondary" >View more <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                </div>
+              </div>
+              
+              <div class="row my-5 px-5 ">
+                  {% for project in latest5_projects%}
+                  <div class="col py-2">
+                        <div class="card border-0 shadow-sm" data-aos="fade-up" data-aos-delay='100' style="min-height:300px">
+                            <img src="{{project.first_img.img.url}}" class="card-img-top" width="150px" height="150px" alt="...">
+                            <div class="card-body">
+                                <a href="{% url 'project:show_project' project.pk%}">
+                              <h5 class="card-title">{{project.title}}</h5>
+                              <p class="card-text " >{{project.details}}</p>
+                              </a>
+                            </div>
+                        </div>
+                    </div>
+                  {%endfor%}
+
+              </div>
+
+            </div>    
+{% endblock contain%}
+{% block script%}
+            <script>
+                $(document).ready(function(){
+                    $('.carousel').carousel();
+                    
+                });
+
+            </script>
+
+            <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+            <script>
+                AOS.init();
+            </script>
+
+
+        {%endblock script%}

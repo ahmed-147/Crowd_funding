@@ -1,0 +1,53 @@
+{% extends '../base.html' %}
+{%block title%}Add Category{% endblock title%}
+{% block contain %}
+
+<div class="container">
+<h1>Categories</h1>
+    <div class="row">
+{% if request.user.is_superuser%}
+    <div class="col-lg-3">
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories%}
+    <tr>
+      <th scope="row">{{category.pk}}</th>
+      <td>{{category.name}}</td>
+      <td><a class="btn btn-primary btn-block" href="{% url 'category:edit_category' category.pk%}">Edit {{category.name}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+        <a href="{% url 'category:add_category' %}" class="btn btn-primary btn-block">Add New Category</a>
+
+    </div>
+
+    <div class="col-lg-3">
+
+    </div>
+{%else%}
+
+    {% for category in categories%}
+    <div class="col-lg-3">
+
+        <a href="/search/?search={{category.pk}}" class="btn btn-light m-4">{{category.name}}</a>
+    </div>
+    {% endfor%}
+
+    {%endif%}
+
+</div>
+</div>
+{% endblock contain %}

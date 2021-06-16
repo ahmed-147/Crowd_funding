@@ -1,0 +1,8 @@
+pip install django-base-url
+
+pip install django_smtp_ssl
+
+pip install pillow
+pip install django-allauth
+pip install django-utils-six
+

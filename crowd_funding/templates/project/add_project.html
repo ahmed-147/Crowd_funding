@@ -1,0 +1,113 @@
+{% extends '../base.html' %}
+{%block title%}Add New Project{% endblock title%}
+{% block contain %}
+<div class="container-fluid ">
+
+
+                <div class="row p-5 ">
+                    <div class="col-ms-1 col-md-1 col-lg-1"></div>
+                    <div class="col-ms-10 col-md-10 col-lg-10">
+                        <form  method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="inputTitle" class="h6" >Title</label>
+                                {{form.title}}
+                                <!--<input type="text" class="form-control" id="inputTitle" name="title" placeholder="Enter a title for your project">
+                              -->
+                              </div>
+                            <div class="form-row">
+
+                              <div class="form-group col-md-4">
+                                <label for="inputTarget" class="h6">Target</label>
+                                <!--<input type="number" class="form-control" id="inputTarget" name="target" min="5000" placeholder="Enter the amount you want to reach" >
+                              -->
+                                  {{form.target}}
+                              </div>
+
+                              <div class="form-group col-md-2"></div>
+
+                              <div class="form-group col-md-4">
+                                <label for="inputCategory" class="h6">Category</label>
+                                <!--<select class="form-control" id="exampleFormControlSelect1" name="category">
+                                    <option value="1">Medical</option>
+                                    <option value="2">Memorial</option>
+                                    <option value="3">Emergency</option>
+                                    <option value="4">Nonprofit</option>
+                                    <option value="5">Education</option>
+                                </select>-->
+                                  {{form.category}}
+                              </div>
+
+                              <div class="form-group col-md-2"></div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                  <label for="inputStartDate" class="h6">Start Date</label>
+                                  <!--<input type="date" class="form-control" id="inputStartDate" name="startdate">
+                                -->
+                                    {{form.start_date}}
+                                </div>
+                                <div class="form-group col-md-2"></div>
+                                <div class="form-group col-md-4">
+                                  <label for="inputEndDate" class="h6">End Date</label>
+                                  <!--<input type="date" class="form-control" id="inputEndDate" name="enddate" >
+                                -->
+                                    {{form.end_date}}
+                                </div>
+                                <div class="form-group col-md-2"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputDetails" class="h6">Details</label>
+                                <textarea class="form-control" id="inputDetails" rows="3" name="details" placeholder="Mention some details of your project" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputTages" class="h6">Tages</label>
+                                <textarea class="form-control" id="inputTages" rows="3" name="tages" placeholder="Tage1,Tage2 (Nots: without spaces)"></textarea>
+                            </div>
+
+
+                            <div class="form-group">
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputImages"  name="projectImgs"  multiple>
+                                <label class="custom-file-label" for="inputImages" data-content="fadsf" >Enter the project pictures</label>
+                              </div>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                          </form>
+                    </div>
+                    <div class="col-ms-1 col-md-1 col-lg-1"></div>
+                </div>
+
+            </div>
+            <script type="text/javascript">
+
+              $('.custom-file input').change(function (e) {
+                  var files = [];
+                  for (var i = 0; i < $(this)[0].files.length; i++) {
+                      files.push($(this)[0].files[i].name);
+                  }
+                  $(this).next('.custom-file-label').html(files.join(', '));
+              });
+
+          </script>
+
+{% endblock contain %}
+{% block script%}
+<script type="text/javascript">
+
+              $('.custom-file input').change(function (e) {
+                  var files = [];
+                  for (var i = 0; i < $(this)[0].files.length; i++) {
+                      files.push($(this)[0].files[i].name);
+                  }
+                  $(this).next('.custom-file-label').html(files.join(', '));
+              });
+
+</script>
+{% endblock script%}

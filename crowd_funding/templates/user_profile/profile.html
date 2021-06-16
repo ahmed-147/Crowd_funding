@@ -1,0 +1,303 @@
+{% extends '../base.html' %}
+{% load static %}
+{% block head %}
+<style>
+        #div1 {
+            background-image:  url({% static 'imgs/pexels-francesco-ungaro-673648.jpg' %});
+            height: 420px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+</style>
+{% endblock head %}
+{%block title%}{{profile.user.username}}{% endblock title%}
+{% block contain %}
+
+</div>
+<div class="container-fluid">
+
+        <div class="row " id="div1" data-aos="fade-right">
+            <div class="col-sm-1 col-lg-1 col-xl-1 col-md-1"></div>
+            <div class="col-sm-5 col-lg-5 col-md-5 col-xl-5">
+                <img src="{{profile.img.url}}" style="margin-top: 80px;" class="img-fluid rounded-circle"
+                    alt="bgImage" width="200px" height="200px" id="personImg">
+            </div>
+
+
+            <div class="col-sm-1 col-lg-1 col-xl-1 col-md-1"></div>
+            <div class="row">
+                <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 align-self-center">
+                    <div>
+                        {% if request.user.is_authenticated and request.user == profile.user %}
+                        <button type="button" class=" btn btn-primary" data-toggle="modal" data-target="#loginForm">
+                            Edit your profile
+                        </button>
+                        {%endif%}
+                   </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 ">
+
+
+                <div class=" card bg-white navbar-light">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">Informations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                                aria-controls="contact" aria-selected="false">Donations</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 "></div>
+
+
+
+                                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 ">
+                                    <div class="card-body">
+                                        <table class="table text-center table-bordered">
+                                            <tbody>
+                                            <tr>
+                                                <th class="table-dark " scope="col">Full Name</th>
+                                                <th scope="col">{{profile.user.first_name}}
+                                                    {{profile.user.last_name}}</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="table-dark " scope="col">User Name</th>
+                                                <th scope="col">{{profile.user.username}}</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="table-dark " scope="col">Telephone number</th>
+                                                <th scope="col">{{profile.phone}}</th>
+                                            </tr>
+                                            {%if profile.birth_date %}
+                                            <tr>
+                                                <th class="table-dark " scope="col">Birth date</th>
+                                                <th scope="col">{{profile.birth_date}}
+                                                </th>
+                                            </tr>
+                                            {% endif %}
+                                            {%if profile.facebook_link %}
+                                            <tr>
+                                                <th class="table-dark " scope="col">Facebook link</th>
+                                                <th scope="col">{{profile.facebook_link}}</th>
+                                            </tr>
+                                            {% endif %}
+                                            {%if profile.country %}
+                                            <tr>
+                                                <th class="table-dark " scope="col">Country</th>
+                                                <th scope="col">{{profile.country}}</th>
+                                            </tr>
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 "> </div>
+
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 "></div>
+
+
+
+                                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 ">
+                                    <div class="table-responsive">
+
+                                        <table class="table table-hover table-bordered">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Title</th>
+                                                    <th scope="col">Descreption</th>
+                                                    <th scope="col">catogry</th>
+                                                    <th scope="col">Target</th>
+                                                    <th scope="col">Reached-Donations</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {%for project in projects%}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td><a href="{% url 'project:show_project' project.pk%}">{{project.title}}</a></td>
+                                                    <td>{{project.details}}</td>
+                                                    <td>{{project.category}}</td>
+                                                    <td>{{project.target}}</td>
+                                                    <td>{{project.current_donation}}</td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 "> </div>
+
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 "></div>
+
+
+
+                                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 ">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-bordered  ">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Project</th>
+                                                    <th scope="col">The value of the donation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for donation in donations%}
+                                                <tr>
+                                                    <th scope="row">{{forloop.counter}}</th>
+                                                    <td><a href="{% url 'project:show_project' donation.project.pk %}" >{{donation.project.title}}</a></td>
+                                                    <td>{{donation.value}}</td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 "> </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="col-xl-10 col-lg-10 col-md-10 col-sm-2 ">
+
+
+                <div class="modal fade" id="loginForm">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+
+                            <div class="row" id="collapseDiv1">
+                                <form action="{% url 'user_profile:edit_profile' profile.pk %}" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+
+
+
+
+                                <div class="col-lg-12 order-lg-0 text-center">
+                                    <img class="rounded-circle img-fluid mt-5" src="{{profile.img.url}}"
+                                        alt="Responsive image" width="250" />
+                                    <h6 class="my-4">Upload a new photo</h6>
+                                    <div class="input-group px-xl-4">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputImages"  name="img1">
+                                            <label class="custom-file-label" for="inputImages" data-content="fadsf" >Edit your picture</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-secondary"><i class="fa fa-upload"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="p-3 py-5">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                            <h6 class="text-right">Edit Profile</h6>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-md-6 mt-2">
+                                                <label>First Name</label>
+                                                <input type="text" class="form-control" name="first_name"
+                                            value="{{profile.user.first_name}}" placeholder="First name">
+                                            </div>
+
+                                            <div class="col-md-6 mt-2">
+                                                <label>Last Name</label>
+                                                <input type="text" class="form-control" name="last_name"
+                                            value="{{profile.user.last_name}}"   placeholder="Last name">
+                                            </div>
+                                            <div class="col-md-6 mt-2">
+                                                <label>Phone Number</label>
+                                                <input type="text" class="form-control" name="phone"
+                                            value="{{profile.phone}}"      placeholder="Phone Number"></div>
+                                            <div class="col-md-6 mt-2">
+                                                <label>Email</label>
+                                                <input type="text" class="form-control"
+                                            value="{{profile.user.email}}"
+                                                       placeholder="email" disabled></div>
+                                            <div class="col-md-6 mt-2">
+                                                <label>Country</label>
+                                                <input type="text" class="form-control" name="country"
+                                                    placeholder="Country">
+                                            </div>
+                                            <div class="col-md-6 mt-2">
+                                                <label>Birth Date</label>
+                                                <input type="date" class="form-control" name="birth_date">
+                                            </div>
+                                            <div class="col-md-6 mt-2">
+                                                <label>Facebook URL</label>
+                                                <input type="url" class="form-control" name="facebook_url"
+                                                    placeholder="Facebook url">
+                                            </div>
+
+                                        </div>
+                                        <div class="mt-5 text-right"><button class="btn btn-primary profile-button"
+                                                type="submit">Save
+                                                Profile</button>
+                                            <button type="button" class="btn btn-outline-secondary profile-button "
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                    </form>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+{% endblock contain %}
